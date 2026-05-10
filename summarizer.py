@@ -2,11 +2,21 @@ from transformers import pipeline
 from collections import Counter
 import re
 
-# Lightweight model
-summarizer_pipeline = pipeline(
-    task="summarization",
-    model="sshleifer/distilbart-cnn-12-6"
-)
+# Lazy loading
+summarizer_pipeline = None
+
+
+def get_pipeline():
+    global summarizer_pipeline
+
+    if summarizer_pipeline is None:
+        summarizer_pipeline = pipeline(
+            task="summarization",
+            model="sshleifer/distilbart-cnn-12-6"
+        )
+
+    return summarizer_pipeline
+
 
 def extract_keywords(text: str, top_n: int = 8) -> list[str]:
 
@@ -31,15 +41,18 @@ def extract_keywords(text: str, top_n: int = 8) -> list[str]:
 
 def generate_summary(text: str) -> tuple[str, list[str]]:
 
+    # Short text
     if len(text.split()) < 30:
         keywords = extract_keywords(text)
         return text.strip(), keywords
 
-    truncated = text[:2500]
+    summarizer = get_pipeline()
 
-    result = summarizer_pipeline(
+    truncated = text[:2000]
+
+    result = summarizer(
         truncated,
-        max_length=120,
+        max_length=100,
         min_length=30,
         do_sample=False
     )
