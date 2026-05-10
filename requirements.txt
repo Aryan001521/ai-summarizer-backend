@@ -1,15 +1,9 @@
 fastapi
 uvicorn
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
 transformers==4.41.1
-torch==2.5.1
 python-jose[cryptography]
 python-multipart
-pymupdf
-sqlalchemy==2.0.36
-requests
-PyPDF2
-passlib
-bcrypt
-pydantic
 pdfplumber
-python-dotenv
+sqlalchemy==2.0.36
