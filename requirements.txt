@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+transformers==4.41.1
+torch==2.5.1
+python-jose
+python-multipart
+pymupdf
+sqlalchemy==2.0.36
+requests
+PyPDF2
+passlib
+bcrypt
+pydantic
+pdfplumber
+python-dotenv
